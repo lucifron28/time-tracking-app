@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'screens/home_sceen.dart';
+import 'screens/home_screen.dart';
 
 
 class TimeTrackingApp extends StatelessWidget {
