@@ -28,7 +28,7 @@ class _GroupByProjectsState extends State<GroupByProjects> {
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.access_time, size: 100, color: Colors.grey),
+              Icon(Icons.folder_copy, size: 100, color: Colors.grey),
               SizedBox(height: 20),
               Text(
                 "No entries found",
