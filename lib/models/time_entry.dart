@@ -8,9 +8,9 @@ class TimeEntry {
   @HiveField(0)
   final String id;
   @HiveField(1)
-  final String projectId;
+  final String projectName;
   @HiveField(2)
-  final String taskId;
+  final String taskName;
   @HiveField(3)
   final int totalMinutes;
   @HiveField(4)
@@ -20,8 +20,8 @@ class TimeEntry {
 
   TimeEntry({
     String? id,
-    required this.projectId,
-    required this.taskId,
+    required this.projectName,
+    required this.taskName,
     required this.totalMinutes,
     required this.date,
     this.notes,
@@ -30,8 +30,8 @@ class TimeEntry {
   factory TimeEntry.fromJson(Map<String, dynamic> json) {
     return TimeEntry(
       id: json['id'] as String?,
-      projectId: json['projectId'] as String,
-      taskId: json['taskId'] as String,
+      projectName: json['projectName'] as String,
+      taskName: json['taskName'] as String,
       totalMinutes: json['totalMinutes'] as int,
       date: DateTime.parse(json['date'] as String),
       notes: json['notes'] as String?,
@@ -41,8 +41,8 @@ class TimeEntry {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'projectId': projectId,
-      'taskId': taskId,
+      'projectName': projectName,
+      'taskName': taskName,
       'totalMinutes': totalMinutes,
       'date': date.toIso8601String(),
       'notes': notes,
