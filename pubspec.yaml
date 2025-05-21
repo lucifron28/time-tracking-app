@@ -38,6 +38,7 @@ dependencies:
   provider: ^6.1.5
   collection: ^1.19.1
   localstorage: ^6.0.0
+  hive_flutter: ^1.1.0
 
 dev_dependencies:
   flutter_test:
