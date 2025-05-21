@@ -1,5 +1,4 @@
 import 'package:time_tracking/utils/id_generator.dart';
-import 'package:time_tracking/utils/date_formatter.dart';
 
 class TimeEntry {
   final String id;
