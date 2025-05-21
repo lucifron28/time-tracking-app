@@ -6,6 +6,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:time_tracking/app.dart';
 import 'package:time_tracking/models/project.dart';
 import 'package:time_tracking/services/project_services.dart';
+import 'package:time_tracking/services/task_services.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,6 +14,7 @@ void main() async {
   Hive.registerAdapter(ProjectAdapter());
   await Hive.openBox('time_entries');
   await ProjectServices.init();
+  await TaskServices.init();
   runApp(
     MultiProvider(
       providers: [
