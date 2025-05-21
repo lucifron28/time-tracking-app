@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:time_tracking/models/project.dart';
+import 'package:time_tracking/providers/project_management_provider.dart';
 import 'package:time_tracking/widgets/add_project_form.dart';
 
 class ProjectManagement extends StatelessWidget {
@@ -13,6 +16,8 @@ class ProjectManagement extends StatelessWidget {
           onSubmit: (name) {
             // save project logic here
             print("Project Name: $name");
+            final newProject = Project(name: name);
+            Provider.of<ProjectManagementProvider>(context, listen: false).addProject(newProject);
             Navigator.of(context).pop();
           },
         ),
