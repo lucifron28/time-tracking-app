@@ -7,6 +7,7 @@ import 'package:time_tracking/app.dart';
 import 'package:time_tracking/models/project.dart';
 import 'package:time_tracking/services/project_services.dart';
 import 'package:time_tracking/services/task_services.dart';
+import 'package:time_tracking/providers/task_management_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,6 +22,9 @@ void main() async {
         ChangeNotifierProvider(create: (context) => TimeEntryProvider()),
         ChangeNotifierProvider(
           create: (context) => ProjectManagementProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => TaskManagementProvider(),
         ),
       ],
       child: TimeTrackingApp(),
