@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:time_tracking/screens/create_time_entry.dart';
 import 'package:time_tracking/screens/project_management.dart';
+import 'package:time_tracking/screens/task_management.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -51,6 +52,12 @@ class _HomeScreenState extends State<HomeScreen> {
               ListTile(
                 leading: Icon(Icons.list_alt_outlined),
                 title: Text("Tasks"),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => TaskManagement()),
+                  );
+                },
               ),
             ],
           ),
