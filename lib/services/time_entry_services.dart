@@ -34,4 +34,26 @@ class TimeEntryServices {
   static Future<void> deleteAllTimeEntries() async {
     await _box.clear();
   }
+
+  static Future<void> deleteEntriesByProject(String projectName) async {
+    final box = Hive.box<TimeEntry>(_boxName);
+    final keysToDelete = box.values
+        .where((entry) => entry.projectName == projectName)
+        .map((entry) => entry.id)
+        .toList();
+    for (var key in keysToDelete) {
+      await box.delete(key);
+    }
+  }
+
+  static Future<void> deleteEntriesByTask(String taskName) async {
+    final box = Hive.box<TimeEntry>(_boxName);
+    final keysToDelete = box.values
+        .where((entry) => entry.taskName == taskName)
+        .map((entry) => entry.id)
+        .toList();
+    for (var key in keysToDelete) {
+      await box.delete(key);
+    }
+  }
 }
