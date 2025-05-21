@@ -1,35 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:time_tracking/widgets/add_project_form.dart';
 
 class ProjectManagement extends StatelessWidget {
   const ProjectManagement({super.key});
 
   void _addProjectForm(BuildContext context) {
     showDialog(
-      context: context, 
-      builder: (context) {
-        return AlertDialog(
-          title: Text("Add Project"),
-          content: TextField(
-            decoration: InputDecoration(hintText: "Enter project name"),
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Add New Project'),
+        content: AddProjectForm(
+          onSubmit: (name) {
+            // save project logic here
+            Navigator.of(context).pop();
+          },
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Cancel'),
           ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                // TODO: Add project logic
-                Navigator.of(context).pop();
-              },
-              child: Text("Add"),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text("Cancel"),
-            ),
-          ],
-        );
-      }
-      );
+          ElevatedButton(
+            onPressed: () {
+              // trigger form submit from outside, or better: add a callback
+            },
+            child: const Text('Add'),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
