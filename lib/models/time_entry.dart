@@ -1,11 +1,21 @@
 import 'package:time_tracking/utils/id_generator.dart';
+import 'package:hive/hive.dart';
 
+part 'time_entry.g.dart';
+
+@HiveType(typeId: 0)
 class TimeEntry {
+  @HiveField(0)
   final String id;
+  @HiveField(1)
   final String projectId;
+  @HiveField(2)
   final String taskId;
+  @HiveField(3)
   final int totalMinutes;
+  @HiveField(4)
   final DateTime date;
+  @HiveField(5)
   final String? notes;
 
   TimeEntry({
