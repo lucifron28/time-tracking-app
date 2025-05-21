@@ -1,15 +1,16 @@
+import '../utils/id_generator.dart';
 class Project {
-  final String id;
+  final String? id;
   final String name;
 
   Project({
-    required this.id,
+    String? id,
     required this.name,
-  });
+  }) : id = id ?? IdGenerator.generate();
 
   factory Project.fromJson(Map<String, dynamic> json) {
     return Project(
-      id: json['id'] as String,
+      id: json['id'] as String?,
       name: json['name'] as String,
     );
   }
