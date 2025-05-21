@@ -17,6 +17,7 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(ProjectAdapter());
   Hive.registerAdapter(TaskAdapter());
+  Hive.registerAdapter(TimeEntryAdapter());
   await Hive.openBox('time_entries');
   await ProjectServices.init();
   await TaskServices.init();
