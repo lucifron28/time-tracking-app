@@ -12,21 +12,10 @@ class ProjectManagement extends StatelessWidget {
         content: AddProjectForm(
           onSubmit: (name) {
             // save project logic here
+            print("Project Name: $name");
             Navigator.of(context).pop();
           },
         ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Cancel'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              // trigger form submit from outside, or better: add a callback
-            },
-            child: const Text('Add'),
-          ),
-        ],
       ),
     );
   }
