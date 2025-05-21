@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/time_entry.dart';
+import 'package:time_tracking/models/time_entry.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class TimeEntryProvider with ChangeNotifier {
