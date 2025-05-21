@@ -39,4 +39,16 @@ class TimeEntryProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void deleteEntriesByProject(String projectName) {
+    _entries.removeWhere((entry) => entry.projectName == projectName);
+    // Optionally, also delete from Hive
+    TimeEntryServices.deleteEntriesByProject(projectName);
+    notifyListeners();
+}
+
+  void deleteEntriesByTask(String taskName) {
+    _entries.removeWhere((entry) => entry.taskName == taskName);
+    TimeEntryServices.deleteEntriesByTask(taskName);
+    notifyListeners();
+}
 }
