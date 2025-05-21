@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:time_tracking/models/time_entry.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:time_tracking/services/time_entry_services.dart';
 
 class TimeEntryProvider with ChangeNotifier {
@@ -29,12 +28,8 @@ class TimeEntryProvider with ChangeNotifier {
     }
   }
 
-  void loadEntries() {
-    final box = Hive.box('time_entries');
-    final entriesFromBox = box.get('entries', defaultValue: []);
-    _entries = (entriesFromBox as List)
-        .map((e) => TimeEntry.fromJson(Map<String, dynamic>.from(e)))
-        .toList();
+  Future<void> loadEntries() async {
+    _entries = await TimeEntryServices.getTimeEntries();
     notifyListeners();
   }
 
