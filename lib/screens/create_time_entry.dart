@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:time_tracking/services/project_services.dart';
 import 'package:time_tracking/services/task_services.dart';
+import 'package:intl/intl.dart';
+import 'package:time_tracking/models/time_entry.dart';
+import 'package:hive/hive.dart';
 
 class CreateTimeEntry extends StatelessWidget {
   const CreateTimeEntry({super.key});
@@ -30,6 +33,10 @@ class _CreateTimeEntryScreenState extends State<CreateTimeEntryScreen> {
   List<String> allTasks = [];
   String? selectedProjectName;
   String? selectedTaskName;
+  final TextEditingController timeController = TextEditingController();
+  final TextEditingController noteController = TextEditingController();
+
+  DateTime selectedDate = DateTime.now();
 
   @override
   void initState() {
@@ -47,48 +54,116 @@ class _CreateTimeEntryScreenState extends State<CreateTimeEntryScreen> {
     });
   }
 
+  void _saveTimeEntry(BuildContext context) async {
+    final totalTimeStr = timeController.text.trim();
+    final notes = noteController.text.trim();
+
+    if (selectedProjectName == null ||
+        selectedTaskName == null ||
+        totalTimeStr.isEmpty) {
+      // show a snackbar or alert
+      return;
+    }
+
+    final totalMinutes = (double.tryParse(totalTimeStr) ?? 0 * 60).toInt();
+
+    final newEntry = TimeEntry(
+      projectName: selectedProjectName!,
+      taskName: selectedTaskName!,
+      totalMinutes: totalMinutes,
+      date: selectedDate,
+      notes: notes.isEmpty ? null : notes,
+    );
+
+    final box = await Hive.openBox<TimeEntry>('timeEntries');
+    await box.put(newEntry.id, newEntry);
+
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Time entry saved successfully!"),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    }
+    if (!context.mounted) return;
+    Navigator.pop(context);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text("Create Time Entry")),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            DropdownButtonFormField<String>(
-              decoration: InputDecoration(labelText: "Project"),
-              items: allProjects
-                  .map((name) => DropdownMenuItem(
-                        value: name,
-                        child: Text(name),
-                      ))
-                  .toList(),
-              value: selectedProjectName,
-              onChanged: (value) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        children: [
+          DropdownButtonFormField<String>(
+            decoration: InputDecoration(labelText: "Project"),
+            items: allProjects
+                    .map(
+                      (name) =>
+                          DropdownMenuItem(value: name, child: Text(name)),
+                    )
+                    .toList(),
+            value: selectedProjectName,
+            onChanged: (value) {
+              setState(() {
+                selectedProjectName = value;
+                // You can also filter tasks related to the selected project here
+              });
+            },
+          ),
+          const SizedBox(height: 16),
+          DropdownButtonFormField<String>(
+            decoration: InputDecoration(labelText: "Task"),
+            items:
+                allTasks
+                    .map(
+                      (name) =>
+                          DropdownMenuItem(value: name, child: Text(name)),
+                    )
+                    .toList(),
+            value: selectedTaskName,
+            onChanged: (value) {
+              setState(() {
+                selectedTaskName = value;
+              });
+            },
+          ),
+          Text("Date: ${DateFormat('yyyy-MM-dd').format(selectedDate)}"),
+          ElevatedButton(
+            onPressed: () async {
+              final picked = await showDatePicker(
+                context: context,
+                initialDate: selectedDate,
+                firstDate: DateTime(2000),
+                lastDate: DateTime(2100),
+              );
+              if (picked != null) {
                 setState(() {
-                  selectedProjectName = value;
-                  // You can also filter tasks related to the selected project here
+                  selectedDate = picked;
                 });
-              },
-            ),
-            const SizedBox(height: 16),
-            DropdownButtonFormField<String>(
-              decoration: InputDecoration(labelText: "Task"),
-              items: allTasks
-                  .map((name) => DropdownMenuItem(
-                        value: name,
-                        child: Text(name),
-                      ))
-                  .toList(),
-              value: selectedTaskName,
-              onChanged: (value) {
-                setState(() {
-                  selectedTaskName = value;
-                });
-              },
-            ),
-          ],
-        ),
+              }
+            },
+            child: Text("Select Date"),
+          ),
+          const SizedBox(height: 16),
+          TextField(
+            controller: timeController,
+            decoration: InputDecoration(labelText: "Time (in hours)"),
+            keyboardType: TextInputType.number,
+          ),
+          const SizedBox(height: 16),
+          TextField(
+            controller: noteController,
+            decoration: InputDecoration(labelText: "Note"),
+            maxLines: 3,
+          ),
+          const SizedBox(height: 16),
+          ElevatedButton(
+            onPressed: () => _saveTimeEntry(context),
+            child: Text("Save Entry"),
+          ),
+        ],
       ),
     );
   }
