@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:time_tracking/models/project.dart';
 import 'package:time_tracking/providers/project_management_provider.dart';
+import 'package:time_tracking/providers/time_entry_provider.dart';
 import 'package:time_tracking/widgets/add_project_form.dart';
 
 class ProjectManagement extends StatelessWidget {
@@ -64,11 +65,6 @@ void initState() {
         final projects = provider.projects;
         if (projects.isEmpty) {
           return Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-        if (projects.isEmpty) {
-          return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -89,6 +85,8 @@ void initState() {
                 icon: Icon(Icons.delete),
                 onPressed: () {
                   provider.deleteProject(project.id);
+                  Provider.of<TimeEntryProvider>(context, listen: false)
+                      .deleteEntriesByProject(project.name);
                 },
               ),
             );
