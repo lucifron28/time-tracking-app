@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:time_tracking/models/project.dart';
 import 'package:time_tracking/providers/project_management_provider.dart';
 import 'package:time_tracking/widgets/add_project_form.dart';
-import 'package:time_tracking/services/project_services.dart';
 
 class ProjectManagement extends StatelessWidget {
   const ProjectManagement({super.key});
