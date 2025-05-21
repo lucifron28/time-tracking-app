@@ -16,8 +16,11 @@ class TimeEntryServices {
     await _box.put(timeEntry.id, timeEntry);
   }
 
-  static List<TimeEntry> getTimeEntries() {
-    return _box.values.toList();
+  static Future<List<TimeEntry>> getTimeEntries() async {
+    if (!Hive.isBoxOpen(_boxName)) {
+      await Hive.openBox<TimeEntry>(_boxName);
+    }
+    return Hive.box<TimeEntry>(_boxName).values.toList();
   }
 
   static Future<void> updateTimeEntry(TimeEntry timeEntry) async {
