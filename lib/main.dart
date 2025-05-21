@@ -5,7 +5,7 @@ import 'package:time_tracking/providers/project_management_provider.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:time_tracking/app.dart';
 import 'package:time_tracking/models/project.dart';
-
+import 'package:time_tracking/services/project_services.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,12 +13,11 @@ void main() async {
   Hive.registerAdapter(ProjectAdapter());
   await Hive.openBox('time_entries');
   await Hive.openBox('projects');
+  await ProjectServices.init();
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (context) => TimeEntryProvider(),
-        ),
+        ChangeNotifierProvider(create: (context) => TimeEntryProvider()),
         ChangeNotifierProvider(
           create: (context) => ProjectManagementProvider(),
         ),
