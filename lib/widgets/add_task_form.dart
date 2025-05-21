@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-
-
+import 'package:time_tracking/services/project_services.dart';
+import 'package:time_tracking/models/task.dart';
 
 class AddTaskForm extends StatefulWidget {
-  final void Function(String name) onSubmit;
+  final void Function(Task task) onSubmit;
 
   const AddTaskForm({super.key, required this.onSubmit});
 
@@ -14,12 +14,16 @@ class AddTaskForm extends StatefulWidget {
 class _AddTaskFormState extends State<AddTaskForm> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
+  final List<String> _projectNames = ProjectServices.getProjects().map((project) => project.name).toList();
+  String? _selectedProjectName;
 
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
-      widget.onSubmit(
-        _nameController.text.trim(),
+      Task newTask = Task(
+        projectName: _selectedProjectName ?? _projectNames.first,
+        name: _nameController.text.trim(),
       );
+      widget.onSubmit(newTask);
     }
   }
 
@@ -36,8 +40,26 @@ class _AddTaskFormState extends State<AddTaskForm> {
               TextFormField(
                 controller: _nameController,
                 decoration: const InputDecoration(labelText: 'Task Name'),
+                validator:
+                    (value) =>
+                        value == null || value.isEmpty ? 'Enter a name' : null,
+              ),
+              DropdownButtonFormField<String>(
+                value: _projectNames.isNotEmpty ? _projectNames.first : null,
+                decoration: const InputDecoration(labelText: 'Project Name'),
+                items: _projectNames.map((projectName) {
+                  return DropdownMenuItem(
+                    value: projectName,
+                    child: Text(projectName),
+                  );
+                }).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    _selectedProjectName = value;
+                  });
+                },
                 validator: (value) =>
-                    value == null || value.isEmpty ? 'Enter a name' : null,
+                    value == null ? 'Select a project' : null,
               ),
               const SizedBox(height: 20),
               Row(
@@ -46,7 +68,7 @@ class _AddTaskFormState extends State<AddTaskForm> {
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.lightGreen,
-                      foregroundColor: Colors.white
+                      foregroundColor: Colors.white,
                     ),
                     onPressed: _submitForm,
                     child: const Text('Add Project'),
@@ -54,7 +76,7 @@ class _AddTaskFormState extends State<AddTaskForm> {
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.redAccent,
-                      foregroundColor: Colors.white
+                      foregroundColor: Colors.white,
                     ),
                     onPressed: () => Navigator.of(context).pop(),
                     child: const Text('Cancel'),
