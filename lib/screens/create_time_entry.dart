@@ -10,6 +10,7 @@ class CreateTimeEntry extends StatelessWidget {
       appBar: AppBar(
         title: Text("Create an entry"),
         centerTitle: true,
+        backgroundColor: Colors.lightBlueAccent,
       ),
       body: CreateTimeEntryScreen(),
     );
