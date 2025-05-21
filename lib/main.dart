@@ -12,7 +12,6 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(ProjectAdapter());
   await Hive.openBox('time_entries');
-  await Hive.openBox('projects');
   await ProjectServices.init();
   runApp(
     MultiProvider(
