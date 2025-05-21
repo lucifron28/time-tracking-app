@@ -18,8 +18,8 @@ class TimeEntryAdapter extends TypeAdapter<TimeEntry> {
     };
     return TimeEntry(
       id: fields[0] as String?,
-      projectId: fields[1] as String,
-      taskId: fields[2] as String,
+      projectName: fields[1] as String,
+      taskName: fields[2] as String,
       totalMinutes: fields[3] as int,
       date: fields[4] as DateTime,
       notes: fields[5] as String?,
@@ -33,9 +33,9 @@ class TimeEntryAdapter extends TypeAdapter<TimeEntry> {
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.projectId)
+      ..write(obj.projectName)
       ..writeByte(2)
-      ..write(obj.taskId)
+      ..write(obj.taskName)
       ..writeByte(3)
       ..write(obj.totalMinutes)
       ..writeByte(4)
