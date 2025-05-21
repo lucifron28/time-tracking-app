@@ -42,6 +42,7 @@ dependencies:
   hive: ^2.2.3
   path_provider: ^2.1.5
   uuid: ^4.5.1
+  build_runner: ^2.4.15
 
 dev_dependencies:
   flutter_test:
