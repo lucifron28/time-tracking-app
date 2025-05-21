@@ -9,21 +9,21 @@ class Task extends HiveObject {
   String id;
 
   @HiveField(1)
-  String projectId;
+  String projectName;
 
   @HiveField(2)
   String name;
 
   Task({
     String? id,
-    required this.projectId,
+    required this.projectName,
     required this.name,
   }) : id = id ?? IdGenerator.generate();
 
   factory Task.fromJson(Map<String, dynamic> json) {
     return Task(
       id: json['id'] as String?,
-      projectId: json['projectId'] as String,
+      projectName: json['projectId'] as String,
       name: json['name'] as String,
     );
   }
@@ -31,7 +31,7 @@ class Task extends HiveObject {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'projectId': projectId,
+      'projectId': projectName,
       'name': name,
     };
   }
