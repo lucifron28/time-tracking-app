@@ -18,7 +18,7 @@ class TaskAdapter extends TypeAdapter<Task> {
     };
     return Task(
       id: fields[0] as String?,
-      projectId: fields[1] as String,
+      projectName: fields[1] as String,
       name: fields[2] as String,
     );
   }
@@ -30,7 +30,7 @@ class TaskAdapter extends TypeAdapter<Task> {
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.projectId)
+      ..write(obj.projectName)
       ..writeByte(2)
       ..write(obj.name);
   }
