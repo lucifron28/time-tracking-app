@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:time_tracking/models/task.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:time_tracking/services/task_services.dart';
 
 
 class TaskManagementProvider with ChangeNotifier {
@@ -10,25 +10,27 @@ class TaskManagementProvider with ChangeNotifier {
 
   void addTask(Task task) {
     _tasks.add(task);
+    TaskServices.addTask(task);
     notifyListeners();
   }
 
   void deleteTask(String id) {
     _tasks.removeWhere((task) => task.id == id);
+    TaskServices.deleteTask(id);
     notifyListeners();
   }
 
-  void saveTasks() {
-    final box = Hive.box('tasks');
-    box.put('tasks', _tasks.map((t) => t.toJson()).toList());
+  void updateTask(Task task) {
+    final index = _tasks.indexWhere((t) => t.id == task.id);
+    if (index != -1) {
+      _tasks[index] = task;
+      TaskServices.updateTask(task);
+      notifyListeners();
+    }
   }
 
   void loadTasks() {
-    final box = Hive.box('tasks');
-    final tasksFromBox = box.get('tasks', defaultValue: []);
-    _tasks = (tasksFromBox as List)
-        .map((t) => Task.fromJson(Map<String, dynamic>.from(t)))
-        .toList();
+    _tasks = TaskServices.getTasks();
     notifyListeners();
   }
 }
