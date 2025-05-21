@@ -1,3 +1,6 @@
+import 'package:time_tracking/utils/id_generator.dart';
+import 'package:time_tracking/utils/date_formatter.dart';
+
 class TimeEntry {
   final String id;
   final String projectId;
@@ -7,17 +10,17 @@ class TimeEntry {
   final String? notes;
 
   TimeEntry({
-    required this.id,
+    String? id,
     required this.projectId,
     required this.taskId,
     required this.totalMinutes,
     required this.date,
     this.notes,
-  });
+  }) : id = id ?? IdGenerator.generate();
 
   factory TimeEntry.fromJson(Map<String, dynamic> json) {
     return TimeEntry(
-      id: json['id'] as String,
+      id: json['id'] as String?,
       projectId: json['projectId'] as String,
       taskId: json['taskId'] as String,
       totalMinutes: json['totalMinutes'] as int,
