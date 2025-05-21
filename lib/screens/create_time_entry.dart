@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:time_tracking/providers/time_entry_provider.dart';
 import 'package:time_tracking/services/project_services.dart';
 import 'package:time_tracking/services/task_services.dart';
 import 'package:intl/intl.dart';
 import 'package:time_tracking/models/time_entry.dart';
-import 'package:hive/hive.dart';
 
 class CreateTimeEntry extends StatelessWidget {
   const CreateTimeEntry({super.key});
@@ -75,8 +76,7 @@ class _CreateTimeEntryScreenState extends State<CreateTimeEntryScreen> {
       notes: notes.isEmpty ? null : notes,
     );
 
-    final box = await Hive.openBox<TimeEntry>('timeEntries');
-    await box.put(newEntry.id, newEntry);
+    Provider.of<TimeEntryProvider>(context, listen: false).addEntry(newEntry);
 
     if (context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
