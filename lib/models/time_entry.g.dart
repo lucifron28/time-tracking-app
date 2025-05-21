@@ -8,7 +8,7 @@ part of 'time_entry.dart';
 
 class TimeEntryAdapter extends TypeAdapter<TimeEntry> {
   @override
-  final int typeId = 0;
+  final int typeId = 2;
 
   @override
   TimeEntry read(BinaryReader reader) {
