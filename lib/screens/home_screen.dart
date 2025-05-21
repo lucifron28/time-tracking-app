@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:time_tracking/screens/create_time_entry.dart';
 import 'package:time_tracking/screens/project_management.dart';
 import 'package:time_tracking/screens/task_management.dart';
+import 'package:time_tracking/screens/tab_bar_views/all_entries.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -75,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         body: TabBarView(
           children: [
-            Center(child: Text("All Entries")),
+            AllEntries(),
             Center(child: Text("Grouped by Projects")),
           ],
         ),
