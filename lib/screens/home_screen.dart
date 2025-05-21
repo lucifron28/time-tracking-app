@@ -89,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
             );
           },
           backgroundColor: Colors.amberAccent,
-          child: Icon(Icons.add),
+          child: Icon(Icons.add_box_sharp),
         ),
       ),
     );
