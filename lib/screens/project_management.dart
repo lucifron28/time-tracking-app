@@ -36,7 +36,7 @@ class ProjectManagement extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () => _addProjectForm(context),
         backgroundColor: Colors.amberAccent,
-        child: Icon(Icons.add),
+        child: Icon(Icons.create_new_folder_outlined, size: 32),
       ),
     );
   }
@@ -56,7 +56,16 @@ class _ProjectManagementBodyState extends State<ProjectManagementBody> {
       builder: (context, provider, child) {
         final projects = provider.projects;
         if (projects.isEmpty) {
-          return Center(child: Text("No Projects Found"));
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.folder_open_rounded, size: 64, color: Colors.grey),
+                SizedBox(height: 16),
+                Text("No Projects Found", style: TextStyle(fontSize: 24, color: Colors.grey)),
+              ],
+            ),
+          );
         }
         return ListView.builder(
           itemCount: projects.length,
