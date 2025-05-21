@@ -1,7 +1,7 @@
 import 'package:time_tracking/utils/id_generator.dart';
 
 class Project {
-  final String? id;
+  final String id;
   final String name;
 
   Project({
