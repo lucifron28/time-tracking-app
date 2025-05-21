@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:time_tracking/models/project.dart';
+import 'package:time_tracking/services/project_services.dart';
 
 
 class ProjectManagementProvider with ChangeNotifier {
@@ -10,25 +11,25 @@ class ProjectManagementProvider with ChangeNotifier {
 
   void addProject(Project project) {
     _projects.add(project);
+    ProjectServices.addProject(project);
     notifyListeners();
   }
 
   void deleteProject(String id) {
     _projects.removeWhere((project) => project.id == id);
+    ProjectServices.deleteProject(id);
     notifyListeners();
   }
-
-  void saveProjects() {
-    final box = Hive.box('projects');
-    box.put('projects', _projects.map((p) => p.toJson()).toList());
+  void updateProject(Project project) {
+    final index = _projects.indexWhere((p) => p.id == project.id);
+    if (index != -1) {
+      _projects[index] = project;
+      ProjectServices.updateProject(project);
+      notifyListeners();
+    }
   }
-
   void loadProjects() {
-    final box = Hive.box('projects');
-    final projectsFromBox = box.get('projects', defaultValue: []);
-    _projects = (projectsFromBox as List)
-        .map((p) => Project.fromJson(Map<String, dynamic>.from(p)))
-        .toList();
+    _projects = ProjectServices.getProjects();
     notifyListeners();
   }
 }
