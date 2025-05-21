@@ -18,7 +18,6 @@ void main() async {
   Hive.registerAdapter(ProjectAdapter());
   Hive.registerAdapter(TaskAdapter());
   Hive.registerAdapter(TimeEntryAdapter());
-  await Hive.openBox('time_entries');
   await ProjectServices.init();
   await TaskServices.init();
   await TimeEntryServices.init();
