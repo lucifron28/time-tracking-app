@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:time_tracking/screens/create_time_entry.dart';
 import 'package:time_tracking/screens/project_management.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -73,7 +74,10 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => CreateTimeEntry()),
+            );
           },
           backgroundColor: Colors.amberAccent,
           child: Icon(Icons.add),
