@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:time_tracking/widgets/add_task_form.dart';
 import 'package:time_tracking/providers/task_management_provider.dart';
-import 'package:time_tracking/models/task.dart';
 
 
 class TaskManagement extends StatelessWidget {
