@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:time_tracking/providers/time_entry_provider.dart';
 import 'package:time_tracking/widgets/add_task_form.dart';
 import 'package:time_tracking/providers/task_management_provider.dart';
 
@@ -78,6 +79,8 @@ class _TaskManagementBodyState extends State<TaskManagementBody> {
                   icon: const Icon(Icons.delete),
                   onPressed: () {
                     provider.deleteTask(task.id);
+                    Provider.of<TimeEntryProvider>(context, listen: false)  
+                        .deleteEntriesByProject(task.projectName);
                   },
                 ),
               );
