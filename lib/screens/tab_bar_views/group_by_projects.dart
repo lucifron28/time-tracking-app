@@ -25,7 +25,17 @@ class _GroupByProjectsState extends State<GroupByProjects> {
       builder: (context, provider, child) {
         final entries = provider.entries;
         if (entries.isEmpty) {
-          return Center(child: Text("No Entries"));
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.access_time, size: 100, color: Colors.grey),
+              SizedBox(height: 20),
+              Text(
+                "No entries found",
+                style: TextStyle(fontSize: 20, color: Colors.grey),
+              ),
+            ],
+          );
         }
 
         final groupedEntries = <String, List<TimeEntry>>{};
