@@ -52,6 +52,28 @@ class ProjectManagementBody extends StatefulWidget {
 class _ProjectManagementBodyState extends State<ProjectManagementBody> {
   @override
   Widget build(BuildContext context) {
-    return Center(child: Text("Projects"));
+    return Consumer<ProjectManagementProvider>(
+      builder: (context, provider, child) {
+        final projects = provider.projects;
+        if (projects.isEmpty) {
+          return Center(child: Text("No Projects Found"));
+        }
+        return ListView.builder(
+          itemCount: projects.length,
+          itemBuilder: (context, index) {
+            final project = projects[index];
+            return ListTile(
+              title: Text(project.name),
+              trailing: IconButton(
+                icon: Icon(Icons.delete),
+                onPressed: () {
+                  provider.deleteProject(project.id);
+                },
+              ),
+            );
+          },
+        );
+      },
+    );
   }
 }
