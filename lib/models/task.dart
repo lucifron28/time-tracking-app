@@ -1,9 +1,18 @@
 import 'package:time_tracking/utils/id_generator.dart';
+import 'package:hive/hive.dart';
 
-class Task {
-  final String id;
-  final String projectId;
-  final String name;
+part 'task.g.dart';
+
+@HiveType(typeId: 0)
+class Task extends HiveObject {
+  @HiveField(0)
+  String id;
+
+  @HiveField(1)
+  String projectId;
+
+  @HiveField(2)
+  String name;
 
   Task({
     String? id,
