@@ -14,8 +14,6 @@ class ProjectManagement extends StatelessWidget {
         title: const Text('Add New Project'),
         content: AddProjectForm(
           onSubmit: (name) {
-            // save project logic here
-            print("Project Name: $name");
             final newProject = Project(name: name);
             Provider.of<ProjectManagementProvider>(context, listen: false).addProject(newProject);
             Navigator.of(context).pop();
