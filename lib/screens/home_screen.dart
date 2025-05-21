@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:time_tracking/screens/create_time_entry.dart';
 import 'package:time_tracking/screens/project_management.dart';
+import 'package:time_tracking/screens/tab_bar_views/group_by_projects.dart';
 import 'package:time_tracking/screens/task_management.dart';
 import 'package:time_tracking/screens/tab_bar_views/all_entries.dart';
 
@@ -77,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
         body: TabBarView(
           children: [
             AllEntries(),
-            Center(child: Text("Grouped by Projects")),
+            GroupByProjects(),
           ],
         ),
         floatingActionButton: FloatingActionButton(
